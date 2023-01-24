@@ -3,7 +3,9 @@ import "flatpickr/dist/flatpickr.min.css";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 class Timer {
-    constructor({ days, hours, minutes, seconds}) {
+    constructor({ input, startBtn, days, hours, minutes, seconds }) {
+        this.input = input;
+        this.startBtn = startBtn;
         this.intervalID = null;
         this.deadline = new Date();
         this.isActive = false;
@@ -18,7 +20,8 @@ class Timer {
                 return;
         }
         this.isActive = true;
-        
+        this.input.disabled = true;
+        this.startBtn.disabled = true;
         this.intervalID = setInterval(() => {
             const diff = this.deadline - Date.now();
 
@@ -39,6 +42,8 @@ class Timer {
     stop() {
         clearInterval(this.intervalID);
         this.isActive = false;
+        this.input.disabled = false;
+        this.startBtn.disabled = false;
     }
 
     convertMs(ms) {
@@ -86,7 +91,7 @@ const options = {
   },
 };
 
-const timer = new Timer({ days: refs.days, hours: refs.hours, minutes: refs.minutes, seconds: refs.seconds });
+const timer = new Timer({ input: refs.datepickr, startBtn:refs.startBtn, days: refs.days, hours: refs.hours, minutes: refs.minutes, seconds: refs.seconds });
 
 refs.startBtn.disabled = true;
 flatpickr(refs.datepickr, options);

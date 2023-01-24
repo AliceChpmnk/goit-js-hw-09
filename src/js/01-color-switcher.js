@@ -15,6 +15,8 @@ function getRandomHexColor() {
 }
 
 function onStartBtnClick() {
+    refs.startBtn.disabled = true;
+
     intervalID = setInterval(() => {
         const currentColor = getRandomHexColor();
         refs.body.style.backgroundColor = currentColor;
@@ -24,5 +26,6 @@ function onStartBtnClick() {
 
 function onStopBtnClick() {
     clearInterval(intervalID);
+    refs.startBtn.disabled = false;
     refs.startBtn.addEventListener('click', onStartBtnClick);
 }
